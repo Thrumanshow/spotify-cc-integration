@@ -2,6 +2,30 @@
 const fs = require('fs');
 const path = require('path');
 
+
+// Cargar enlaces multimedia (video principal + shorts) si existen
+let mediaLinks = { youtubeMainVideo: "", youtubeShorts: [] };
+const mediaLinksPath = path.join(__dirname, 'media-links.json');
+if (fs.existsSync(mediaLinksPath)) {
+  try {
+    mediaLinks = JSON.parse(fs.readFileSync(mediaLinksPath, 'utf-8'));
+  } catch (e) {
+    console.log("⚠️ Error leyendo media-links.json, usando valores por defecto.");
+  }
+}
+
+// Extraer ID de YouTube de diversos formatos de URL (video normal o short)
+function getYouTubeId(url) {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|\/shorts\/)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return (match && match[2].length === 11) ? match[2] : null;
+}
+
+const shortsIds = (mediaLinks.youtubeShorts || [])
+  .map(url => getYouTubeId(url))
+  .filter(id => id !== null);
+
 const trackConfig = {
   title: "Misericordia",
   artist: "Chrisquinonezartista (HormigasAIS)",
@@ -23,7 +47,9 @@ const schemaData = {
   },
   "url": trackConfig.siteUrl,
   "sameAs": [
-    trackConfig.geniusUrl
+    trackConfig.geniusUrl,
+    ...(mediaLinks.youtubeMainVideo ? [mediaLinks.youtubeMainVideo] : []),
+    ...(mediaLinks.youtubeShorts || [])
   ],
   "description": trackConfig.description,
   "recordingOf": {
@@ -101,6 +127,42 @@ const htmlContent = `<!DOCTYPE html>
       font-weight: bold;
       margin-top: 15px;
     }
+    .shorts-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .shorts-gallery a {
+      display: block;
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 9 / 16;
+      background: #000;
+      text-decoration: none;
+    }
+    .shorts-gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .shorts-gallery .short-label {
+      position: absolute;
+      bottom: 6px;
+      left: 6px;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      font-size: 0.7em;
+      padding: 3px 6px;
+      border-radius: 4px;
+    }
+    .section-title {
+      margin-top: 28px;
+      font-size: 1.1em;
+      color: var(--highlight);
+    }
     .node-status {
       margin-top: 30px;
       padding: 12px;
@@ -118,12 +180,24 @@ const htmlContent = `<!DOCTYPE html>
 
     <p>${trackConfig.description}</p>
 
+    ${shortsIds.length > 0 ? `
+    <div class="section-title">📱 YouTube Shorts</div>
+    <div class="shorts-gallery">
+      ${shortsIds.map(id => `
+      <a href="https://www.youtube.com/shorts/${id}" target="_blank" rel="noopener noreferrer">
+        <img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="YouTube Short ${trackConfig.title}" loading="lazy">
+        <span class="short-label">▶ Short</span>
+      </a>
+      `).join('')}
+    </div>
+    ` : ''}
+
     <a href="${trackConfig.geniusUrl}" target="_blank" rel="noopener noreferrer" class="genius-btn">
       📜 Ver Letra Oficial en Genius
     </a>
 
     <div class="node-status">
-      🐜 [HormigasAIS Node] Estado: Sincronizado | Dispositivo: Termux Edge
+      🐜 [HormigasAIS Node] Estado: Sincronizado | Dispositivo: Termux Edge | Shorts: ${shortsIds.length}
     </div>
   </div>
 </body>

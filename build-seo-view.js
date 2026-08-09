@@ -129,7 +129,7 @@ const htmlContent = `<!DOCTYPE html>
 </body>
 </html>`;
 
-const publicDir = path.join(__dirname, 'public');
+const publicDir = path.join(__dirname, 'docs');
 if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
 
 fs.writeFileSync(path.join(publicDir, 'index.html'), htmlContent);

@@ -33,7 +33,9 @@
   },
   "url": "https://music.hormigasais.com",
   "sameAs": [
-    "https://genius.com/Chrisquinonezartista-hormigasaiscriswarriortv-misericordia-lyrics"
+    "https://genius.com/Chrisquinonezartista-hormigasaiscriswarriortv-misericordia-lyrics",
+    "https://youtu.be/LZ-QHEFBABc?si=GcD0s4hYdmW-2hjy",
+    "https://youtube.com/shorts/EACgvonI3T0?si=HjMPLtkIM-mZQmI8"
   ],
   "description": "Letra oficial, metadatos y visualización de sincronización CC para 'Misericordia' de Chrisquinonezartista. Desplegado desde nodo Edge de HormigasAIS.",
   "recordingOf": {
@@ -83,6 +85,24 @@
       text-decoration: none;
       font-weight: bold;
       margin-top: 15px;
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      background: #000;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
     .shorts-gallery {
       display: grid;
@@ -138,13 +158,29 @@
     <p>Letra oficial, metadatos y visualización de sincronización CC para 'Misericordia' de Chrisquinonezartista. Desplegado desde nodo Edge de HormigasAIS.</p>
 
     
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/LZ-QHEFBABc" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    
+
+    
+    <div class="section-title">📱 YouTube Shorts</div>
+    <div class="shorts-gallery">
+      
+      <a href="https://www.youtube.com/shorts/EACgvonI3T0" target="_blank" rel="noopener noreferrer">
+        <img src="https://img.youtube.com/vi/EACgvonI3T0/hqdefault.jpg" alt="YouTube Short Misericordia" loading="lazy">
+        <span class="short-label">▶ Short</span>
+      </a>
+      
+    </div>
+    
 
     <a href="https://genius.com/Chrisquinonezartista-hormigasaiscriswarriortv-misericordia-lyrics" target="_blank" rel="noopener noreferrer" class="genius-btn">
       📜 Ver Letra Oficial en Genius
     </a>
 
     <div class="node-status">
-      🐜 [HormigasAIS Node] Estado: Sincronizado | Dispositivo: Termux Edge | Shorts: 0
+      🐜 [HormigasAIS Node] Estado: Sincronizado | Dispositivo: Termux Edge | Shorts: 1
     </div>
   </div>
 </body>

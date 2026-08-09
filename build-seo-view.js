@@ -26,6 +26,8 @@ const shortsIds = (mediaLinks.youtubeShorts || [])
   .map(url => getYouTubeId(url))
   .filter(id => id !== null);
 
+const ytId = getYouTubeId(mediaLinks.youtubeMainVideo);
+
 const trackConfig = {
   title: "Misericordia",
   artist: "Chrisquinonezartista (HormigasAIS)",
@@ -127,6 +129,24 @@ const htmlContent = `<!DOCTYPE html>
       font-weight: bold;
       margin-top: 15px;
     }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      background: #000;
+      margin-top: 20px;
+      border-radius: 8px;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
     .shorts-gallery {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -179,6 +199,12 @@ const htmlContent = `<!DOCTYPE html>
     <div class="subtitle">Artista: ${trackConfig.artist} • Infraestructura HormigasAIS</div>
 
     <p>${trackConfig.description}</p>
+
+    ${ytId ? `
+    <div class="video-container">
+      <iframe src="https://www.youtube.com/embed/${ytId}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    ` : ''}
 
     ${shortsIds.length > 0 ? `
     <div class="section-title">📱 YouTube Shorts</div>

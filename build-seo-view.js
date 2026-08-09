@@ -7,10 +7,10 @@ const trackConfig = {
   artist: "Chrisquinonezartista (HormigasAIS)",
   geniusUrl: "https://genius.com/Chrisquinonezartista-hormigasaiscriswarriortv-misericordia-lyrics",
   spotifyEmbedUrl: "https://open.spotify.com/embed/track/ID_SPOTIFY_TRACK",
-  siteUrl: "https://criswarriortv.github.io/spotify-cc-integration",
+  siteUrl: "https://music.hormigasais.com",
   description: "Letra oficial, metadatos y visualización de sincronización CC para 'Misericordia' de Chrisquinonezartista. Desplegado desde nodo Edge de HormigasAIS.",
   keywords: "Misericordia, Chrisquinonezartista, HormigasAIS, Genius, Spotify CC, Edge Computing, LBH",
-  imageUrl: "https://criswarriortv.github.io/spotify-cc-integration/og-cover.jpg"
+  imageUrl: "https://music.hormigasais.com/og-cover.jpg"
 };
 
 const schemaData = {

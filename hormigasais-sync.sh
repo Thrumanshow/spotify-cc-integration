@@ -39,6 +39,9 @@ if git diff-index --quiet HEAD -- 2>/dev/null; then
     echo "ℹ️  No se detectaron cambios pendientes."
 else
     git commit -m "$COMMIT_MSG"
-    git push origin main 2>/dev/null || git push origin master
+    if ! git push origin main; then
+        echo "❌ [HormigasAIS] Falló el push a origin/main. Revisa el error arriba." >&2
+        exit 1
+    fi
     echo "✅ [HormigasAIS] Sincronización y push completados."
 fi
